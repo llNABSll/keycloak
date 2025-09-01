@@ -1,0 +1,76 @@
+{
+  "realm": "paye-ton-kawa",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "product-api",
+      "publicClient": true,
+      "directAccessGrantsEnabled": true,
+      "standardFlowEnabled": true,
+      "redirectUris": ["*"],
+      "webOrigins": ["*"],
+      "attributes": {
+        "access.token.lifespan": "900" 
+      }
+    },
+    {
+      "clientId": "product-gw",
+      "secret": "CHANGE_ME_SECRET",
+      "publicClient": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "standardFlowEnabled": true,
+      "redirectUris": [
+        "http://localhost/oauth2/callback",
+        "http://traefik/oauth2/callback"
+      ],
+      "webOrigins": ["*"],
+      "protocol": "openid-connect",
+      "attributes": {
+        "access.token.lifespan": "900"
+      },
+      "defaultClientScopes": ["roles"]
+    }
+  ],
+  "roles": {
+    "realm": [
+      { "name": "product:read" },
+      { "name": "product:write" }
+    ]
+  },
+  "users": [
+    {
+      "username": "demo",
+      "email": "demo@local",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        { "type": "password", "value": "demo", "temporary": false }
+      ],
+      "realmRoles": ["product:read", "product:write"]
+    }
+  ],
+  "clientScopes": [
+    {
+      "name": "roles",
+      "description": "Expose realm roles",
+      "protocol": "openid-connect",
+      "protocolMappers": [
+        {
+          "name": "realm-roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "user.attribute": "foo",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "roles",
+            "jsonType.label": "String"
+          }
+        }
+      ]
+    }
+  ]
+}
