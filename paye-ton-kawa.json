@@ -181,7 +181,7 @@
       "lastName": "Dev",
       "enabled": true,
       "credentials": [{ "type": "password", "value": "dev" }],
-      "realmRoles": ["developer", "product:read", "order:read"],
+      "realmRoles": ["developer", "product:read", "order:read","customer:read"],
       "groups": ["/dev-team"]
     },
     {
@@ -191,7 +191,7 @@
       "lastName": "User",
       "enabled": true,
       "credentials": [{ "type": "password", "value": "demo" }],
-      "realmRoles": ["user", "product:read", "order:read", "customer:read"],
+      "realmRoles": ["user","product:read","order:read", "order:write","customer:read", "customer:write"],
       "groups": ["/customers"]
     }
   ]
